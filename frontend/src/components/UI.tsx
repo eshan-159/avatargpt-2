@@ -13,16 +13,18 @@ export const UI = ({
     const [voiceListening, setVoiceListening] = useState(false);
 
     const sendMessage = () => {
-        const text = input.current.value;
-        if (!loading && !message && text.trim() !== "") {
+        const text = input.current?.value;
+        if (!loading && !message && text && text.trim() !== "") {
             chat(text);
-            input.current.value = "";
+            if (input.current) {
+                input.current.value = "";
+            }
         }
     };
 
     const startListening = () => {
         const SpeechRecognition =
-            window.SpeechRecognition || window.webkitSpeechRecognition;
+            (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
         if (!SpeechRecognition) {
             alert("Your browser does not support Speech Recognition.");
@@ -42,12 +44,14 @@ export const UI = ({
             setVoiceListening(false);
         };
 
-        recognition.onresult = (event) => {
+        recognition.onresult = (event: any) => {
             const transcript = event.results[0][0].transcript;
-            input.current.value = transcript;
+            if (input.current) {
+                input.current.value = transcript;
+            }
         };
 
-        recognition.onerror = (event) => {
+        recognition.onerror = (event: any) => {
             console.error("Speech recognition error:", event.error);
             setVoiceListening(false);
         };

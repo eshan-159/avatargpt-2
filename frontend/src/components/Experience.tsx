@@ -8,7 +8,11 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useChat } from "../hooks/useChat";
 import { Avatar } from "./Avatar";
 
-const Dots = (props) => {
+interface DotsProps {
+    [key: string]: any;
+}
+
+const Dots = (props: DotsProps) => {
     const { loading } = useChat();
     const [loadingText, setLoadingText] = useState<string>("");
     useEffect(() => {
