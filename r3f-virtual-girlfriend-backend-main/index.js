@@ -13,7 +13,8 @@ const openai = new OpenAI({
 
 const elevenLabsApiKey = process.env.ELEVEN_LABS_API_KEY;
 const voiceID = "m5qndnI7u4OAdXhH0Mr5";
-
+// const sarvamaiapikey = process.env.SARVAM_API_KEY ; // Your Sarvamai API key here, I used a default value to avoid errors when the key is not set but you should not do that
+// const voiceID=""
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -110,7 +111,7 @@ app.post("/chat", async (req, res) => {
       {
         role: "system",
         content: `
-        you are a dancer
+        you are a singer u can sing hindi songs
         You will always reply with a JSON array of messages. With a maximum of 3 messages.
         Each message has a text, facialExpression, and animation property.
         The different facial expressions are: smile, sad, angry, surprised, funnyFace, and default.
@@ -135,6 +136,18 @@ app.post("/chat", async (req, res) => {
     console.log(`Generating audio for message ${i}:`, message.text);
     const textInput = message.text; // The text you wish to convert to speech
     await voice.textToSpeech(elevenLabsApiKey, voiceID, fileName, textInput);
+//     const response = await fetch("https://api.sarvam.ai/text-to-speech", {
+//   method: "POST",
+//   headers: {
+//     "api-subscription-key": "726a680d-758....da0e3ca39ec8",
+//     "Content-Type": "application/json"
+//   },
+//   body: JSON.stringify({
+//     "text": "Hii i am a miner",
+//     "target_language_code": "hi-IN",
+//     "speaker": "hitesh"
+//   }),
+// });
     // generate lipsync
     await lipSyncMessage(i);
     message.audio = await audioFileToBase64(fileName);
@@ -155,5 +168,5 @@ const audioFileToBase64 = async (file) => {
 };
 
 app.listen(port, () => {
-  console.log(`Virtual Girlfriend listening on port ${port}`);
+  console.log(`minor is lisning ${port}`);
 });
