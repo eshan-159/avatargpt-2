@@ -15,13 +15,14 @@ export const ChatProvider = ({ children }) => {
       body: JSON.stringify({ message }),
     });
     const resp = (await data.json()).messages;
+    // @ts-ignore
     setMessages((messages) => [...messages, ...resp]);
     setLoading(false);
   };
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState();
   const [loading, setLoading] = useState(false);
-  const [cameraZoomed, setCameraZoomed] = useState(true);
+  const [cameraState, setCameraState] = useState<"zoomed" | "default" | "zoomeout">("default");
   const onMessagePlayed = () => {
     setMessages((messages) => messages.slice(1));
   };
@@ -41,8 +42,8 @@ export const ChatProvider = ({ children }) => {
         message,
         onMessagePlayed,
         loading,
-        cameraZoomed,
-        setCameraZoomed,
+        cameraState,
+        setCameraState,
       }}
     >
       {children}
@@ -50,7 +51,7 @@ export const ChatProvider = ({ children }) => {
   );
 };
 
-export const useChat = () => {
+export const useChat = (): any => {
   const context = useContext(ChatContext);
   if (!context) {
     throw new Error("useChat must be used within a ChatProvider");

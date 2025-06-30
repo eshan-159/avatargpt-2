@@ -38,19 +38,19 @@ const execCommand = (command) => {
 };
 
 const lipSyncMessage = async (message) => {
-  const time = new Date().getTime();
-  console.log(`Starting conversion for message ${message}`);
-  await execCommand(
-    `ffmpeg -y -i audios/message_${message}.mp3 audios/message_${message}.wav`
-    // -y to overwrite the file
-  );
-  console.log(`Conversion done in ${new Date().getTime() - time}ms`);
-  await execCommand(
-    //`/Users/eshan./Desktop/r3f-virtual-girlfriend-backend-main/Rhubarb-Lip-Sync-1.14.0-macOS/rhubarb -f json -o audios/message_${message}.json audios/message_${message}.wav`
-    `./bin/rhubarb -f json -o audios/message_${message}.json audios/message_${message}.wav -r phonetic`
-  );
-  // -r phonetic is faster but less accurate
-  console.log(`Lip sync done in ${new Date().getTime() - time}ms`);
+  // const time = new Date().getTime();
+  // console.log(`Starting conversion for message ${message}`);
+  // await execCommand(
+  //   `ffmpeg -y -i audios/message_${message}.mp3 audios/message_${message}.wav`
+  //   // -y to overwrite the file
+  // );
+  // console.log(`Conversion done in ${new Date().getTime() - time}ms`);
+  // await execCommand(
+  //   //`/Users/eshan./Desktop/r3f-virtual-girlfriend-backend-main/Rhubarb-Lip-Sync-1.14.0-macOS/rhubarb -f json -o audios/message_${message}.json audios/message_${message}.wav`
+  //   `./bin/rhubarb -f json -o audios/message_${message}.json audios/message_${message}.wav -r phonetic`
+  // );
+  // // -r phonetic is faster but less accurate
+  // console.log(`Lip sync done in ${new Date().getTime() - time}ms`);
 };
 
 app.post("/chat", async (req, res) => {
